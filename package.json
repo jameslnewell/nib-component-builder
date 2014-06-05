@@ -1,0 +1,12 @@
+{
+  "name": "component-builder",
+  "version": "0.1.0",
+  "description": "One stop method for building JS, CSS and other assets with the Component libraries.",
+  "main": "index.js",
+  "private": true,
+  "dependencies": {
+    "component-validator": "~1.1.0",
+    "component-resolver": "~1.1.6",
+    "component-builder": "~1.1.6"
+  }
+}
