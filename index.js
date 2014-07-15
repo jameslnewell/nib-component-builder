@@ -42,6 +42,10 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {boolean}   [options.autorequire=true]    Whether to automatically require the canonical component
  * @param   {boolean}   [options.development=false]   Whether the development dependencies should be built
  * @param   {boolean}   [options.verbose=false]       Whether to print warnings and status messages to stdout
+ * @param   {boolean}   [options.scripts]             Whether to build the scripts
+ * @param   {boolean}   [options.styles]              Whether to build the styles
+ * @param   {boolean}   [options.files]               Whether to build the files
+ * @param   {boolean}   [options.directory]           The output directory
  * @param   {function}  callback                      The callback
  */
 module.exports = function(directory, options, callback) {
@@ -69,7 +73,7 @@ module.exports = function(directory, options, callback) {
   var componentFile       = componentDirectory+'/component.json';
 
   //the build directory
-  var buildDirectory      = componentDirectory+'/build';
+  var buildDirectory      = options.directory || componentDirectory+'/build';
   var buildScript         = buildDirectory+'/build.js';
   var buildStyle          = buildDirectory+'/build.css';
 
@@ -179,8 +183,7 @@ module.exports = function(directory, options, callback) {
    * @param   {object}  tree
    */
   function buildFiles(tree) {
-    console.log('building files');
-    builder.files(tree)
+    builder.files(tree, {destination: buildDirectory})
       .use('images', builder.plugins.copy())
       .use('fonts', builder.plugins.copy())
       .use('files', builder.plugins.copy())
@@ -204,7 +207,7 @@ module.exports = function(directory, options, callback) {
 
     var resolveOptions = {
       root:         componentDirectory,
-      out:          componentDirectory,
+      out:          componentDirectory+'/components',
       install:      options.install !== false,
       development:  options.development === true,
       verbose:      options.verbose === true
@@ -246,7 +249,3 @@ module.exports = function(directory, options, callback) {
   });
 
 };
-
-module.exports('C:\\temp\\app', {verbose: true}, function(err) {
-  console.log(err);
-});
