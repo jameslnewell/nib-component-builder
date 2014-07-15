@@ -45,7 +45,8 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {boolean}   [options.scripts]             Whether to build the scripts
  * @param   {boolean}   [options.styles]              Whether to build the styles
  * @param   {boolean}   [options.files]               Whether to build the files
- * @param   {boolean}   [options.directory]           The output directory
+ * @param   {boolean}   [options.installDir]          The directory where the components are installed to
+ * @param   {boolean}   [options.buildDir]            The directory where the components are built to
  * @param   {function}  callback                      The callback
  */
 module.exports = function(directory, options, callback) {
@@ -73,7 +74,8 @@ module.exports = function(directory, options, callback) {
   var componentFile       = componentDirectory+'/component.json';
 
   //the build directory
-  var buildDirectory      = options.directory || componentDirectory+'/build';
+  var installDirectory    = options.installDir || componentDirectory+'/components';
+  var buildDirectory      = options.buildDir || componentDirectory+'/build';
   var buildScript         = buildDirectory+'/build.js';
   var buildStyle          = buildDirectory+'/build.css';
 
@@ -201,13 +203,13 @@ module.exports = function(directory, options, callback) {
   function build(component) {
 
     var validateOptions = {
-      filename: '',
+      filename:     componentDirectory,
       verbose:      options.verbose === true
     };
 
     var resolveOptions = {
       root:         componentDirectory,
-      out:          componentDirectory+'/components',
+      out:          installDirectory,
       install:      options.install !== false,
       development:  options.development === true,
       verbose:      options.verbose === true
@@ -217,7 +219,7 @@ module.exports = function(directory, options, callback) {
     try {
       validator(component, validateOptions);
     } catch(err) {
-      callback(err);
+      callback([err]);
       return;
     }
 
