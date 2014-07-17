@@ -42,9 +42,9 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {boolean}   [options.autorequire=true]    Whether to automatically require the canonical component
  * @param   {boolean}   [options.development=false]   Whether the development dependencies should be built
  * @param   {boolean}   [options.verbose=false]       Whether to print warnings and status messages to stdout
- * @param   {boolean}   [options.scripts]             Whether to build the scripts
- * @param   {boolean}   [options.styles]              Whether to build the styles
- * @param   {boolean}   [options.files]               Whether to build the files
+ * @param   {boolean}   [options.scripts=true]        Whether to build the scripts
+ * @param   {boolean}   [options.styles=true]         Whether to build the styles
+ * @param   {boolean}   [options.files=true]          Whether to build the files
  * @param   {boolean}   [options.installDir]          The directory where the components are installed to
  * @param   {boolean}   [options.buildDir]            The directory where the components are built to
  * @param   {function}  callback                      The callback

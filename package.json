@@ -1,7 +1,7 @@
 {
   "name": "nib-component-builder",
   "version": "0.1.0",
-  "description": "One stop method for building JS, CSS and other assets with the Component libraries.",
+  "description": "One stop method for building JS, CSS and other assets with the Component builder.",
   "main": "index.js",
   "private": true,
   "dependencies": {
