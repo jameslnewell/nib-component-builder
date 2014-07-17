@@ -115,9 +115,10 @@ module.exports = function(directory, options, callback) {
   /**
    * Build scripts
    * @param   {object}  tree
+   * @param   {object}  options
    */
-  function buildScripts(tree) {
-    builder.scripts(tree)
+  function buildScripts(tree, options) {
+    builder.scripts(tree, options)
       .use('scripts', builder.plugins.js())
       .use('templates', builder.plugins.string())
       .use('json', builder.plugins.json())
@@ -156,9 +157,10 @@ module.exports = function(directory, options, callback) {
   /**
    * Build styles
    * @param   {object}  tree
+   * @param   {object}  options
    */
-  function buildStyles(tree) {
-    builder.styles(tree)
+  function buildStyles(tree, options) {
+    builder.styles(tree, options)
       .use('styles', builder.plugins.css())
       .use('styles', builder.plugins.urlRewriter())
       .end(function (err, output) {
@@ -183,9 +185,11 @@ module.exports = function(directory, options, callback) {
   /**
    * Build files
    * @param   {object}  tree
+   * @param   {object}  options
    */
-  function buildFiles(tree) {
-    builder.files(tree, {destination: buildDirectory})
+  function buildFiles(tree, options) {
+    options.destination = buildDirectory;
+    builder.files(tree, options)
       .use('images', builder.plugins.copy())
       .use('fonts', builder.plugins.copy())
       .use('files', builder.plugins.copy())
@@ -215,6 +219,10 @@ module.exports = function(directory, options, callback) {
       verbose:      options.verbose === true
     };
 
+    var builderOptions = {
+      development:  options.development === true,
+    };
+
     //validate the component
     try {
       validator(component, validateOptions);
@@ -228,15 +236,15 @@ module.exports = function(directory, options, callback) {
       if (err) return callback([err]);
 
       if (options.scripts !== false) {
-        buildScripts(tree);
+        buildScripts(tree, builderOptions);
       }
 
       if (options.styles !== false) {
-        buildStyles(tree);
+        buildStyles(tree, builderOptions);
       }
 
       if (options.files !== false) {
-        buildFiles(tree);
+        buildFiles(tree, builderOptions);
       }
 
     });
