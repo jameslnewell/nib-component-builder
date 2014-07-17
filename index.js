@@ -50,9 +50,9 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {function}  callback                      The callback
  */
 module.exports = function(directory, options, callback) {
-  options.scripts = options.scripts || true;
-  options.styles = options.styles || true;
-  options.files = options.files || true;
+  options.scripts = typeof options.scripts === 'undefined' ? true : options.scripts;
+  options.styles  = typeof options.styles === 'undefined' ? true : options.styles;
+  options.files   = typeof options.files === 'undefined' ? true : options.files;
 
   /**
    * The errors which occurred during build
