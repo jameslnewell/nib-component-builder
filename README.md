@@ -31,7 +31,7 @@ One stop method for building JS, CSS and other assets with the Component builder
 ## Usage
     
     require('nib-component-builder')('C:\\temp\\app', {}, function(err) {
-      if (err) {
+      if (err.length) {
         console.log(err);
       } else {
         console.log('done');
