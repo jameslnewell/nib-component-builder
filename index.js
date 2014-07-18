@@ -11,22 +11,16 @@ var builder   = require('component-builder');
  * @param   {function}  callback
  */
 function createDirectoryIfItDoesntExist(directory, callback) {
-  fs.exists(directory, function(exists) {
-    if (exists) {
-      callback();
+  fs.mkdir(directory, function(err) {
+
+    //if we get an error stating the dir already exists (because of a race condition) then
+    // we're safe to create the file because it exists
+    if (err && err.code !== 'EEXIST') {
+      callback(err);
     } else {
-      fs.mkdir(directory, function(err) {
-
-        //if we get an error stating the dir already exists (because of a race condition) then
-        // we're safe to create the file because it exists
-        if (err && err.code !== 'EEXIST') {
-          callback(err);
-        } else {
-          callback();
-        }
-
-      });
+      callback();
     }
+
   });
 }
 
