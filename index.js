@@ -15,7 +15,17 @@ function createDirectoryIfItDoesntExist(directory, callback) {
     if (exists) {
       callback();
     } else {
-      fs.mkdir(directory, callback);
+      fs.mkdir(directory, function(err) {
+
+        //if we get an error stating the dir already exists (because of a race condition) then
+        // we're safe to create the file because it exists
+        if (err && err.code !== 'EEXIST') {
+          callback(err);
+        } else {
+          callback();
+        }
+
+      });
     }
   });
 }
