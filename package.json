@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
   "dependencies": {
-    "component-validator": "~1.1",
-    "component-resolver": "~1.1",
-    "component-builder": "~1.1"
+    "component-validator": "~1.1.1",
+    "component-resolver": "~1.2.4",
+    "component-builder": "~1.1.13"
   }
 }
