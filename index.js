@@ -83,8 +83,12 @@ module.exports = function(directory, options, callback) {
   //the build directory
   var installDirectory    = options.installDir || componentDirectory+'/components';
   var buildDirectory      = options.buildDir || componentDirectory+'/build';
-  var buildScript         = buildDirectory+'/build.js';
-  var buildStyle          = buildDirectory+'/build.css';
+  var cssBuildFile      = options.cssBuildFile || 'build.css';
+  var jsBuildFile      = options.jsBuildFile || 'build.js';
+  
+  var buildScript         = buildDirectory+'/'+jsBuildFile;
+  var buildStyle          = buildDirectory+'/'+cssBuildFile;
+  
 
   // === set builder count ===
 
