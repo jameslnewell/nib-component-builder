@@ -23,8 +23,10 @@ One stop method for building JS, CSS and other assets with the Component builder
      * @param   {boolean}   [options.scripts=true]        Whether to build the scripts
      * @param   {boolean}   [options.styles=true]         Whether to build the styles
      * @param   {boolean}   [options.files=true]          Whether to build the files
-     * @param   {boolean}   [options.installDir]          The directory where the components are installed to
-     * @param   {boolean}   [options.buildDir]            The directory where the components are built to
+     * @param   {string}    [options.installDir]          The directory where the components are installed to
+     * @param   {string}    [options.buildDir]            The directory where the components are built to
+     * @param   {string}    [options.scriptBuildFile]     The name of the script build file e.g. build.js
+     * @param   {string}    [options.styleBuildFile]      The name of the style build file e.g. build.css
      * @param   {function}  callback                      The callback
      */
 
