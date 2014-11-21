@@ -49,8 +49,10 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {boolean}   [options.scripts=true]        Whether to build the scripts
  * @param   {boolean}   [options.styles=true]         Whether to build the styles
  * @param   {boolean}   [options.files=true]          Whether to build the files
- * @param   {boolean}   [options.installDir]          The directory where the components are installed to
- * @param   {boolean}   [options.buildDir]            The directory where the components are built to
+ * @param   {string}    [options.installDir]          The directory where the components are installed to
+ * @param   {string}    [options.buildDir]            The directory where the components are built to
+ * @param   {string}    [options.scriptBuildFile]     The name of the script build file e.g. build.js
+ * @param   {string}    [options.styleBuildFile]      The name of the style build file e.g. build.css
  * @param   {function}  callback                      The callback
  */
 module.exports = function(directory, options, callback) {
@@ -83,11 +85,12 @@ module.exports = function(directory, options, callback) {
   //the build directory
   var installDirectory    = options.installDir || componentDirectory+'/components';
   var buildDirectory      = options.buildDir || componentDirectory+'/build';
-  var cssBuildFile      = options.cssBuildFile || 'build.css';
-  var jsBuildFile      = options.jsBuildFile || 'build.js';
-  
-  var buildScript         = buildDirectory+'/'+jsBuildFile;
-  var buildStyle          = buildDirectory+'/'+cssBuildFile;
+
+  var scriptBuildFile     = options.scriptBuildFile || 'build.js';
+  var scriptBuildPath     = buildDirectory+'/'+scriptBuildFile;
+
+  var styleBuildFile      = options.styleBuildFile || 'build.css';
+  var styleBuildPath      = buildDirectory+'/'+styleBuildFile;
   
 
   // === set builder count ===
@@ -156,7 +159,7 @@ module.exports = function(directory, options, callback) {
           }
         }
         //create the file inside the build directory
-        createFileInDirectoryAndWrite(buildScript, output, function(err) {
+        createFileInDirectoryAndWrite(scriptBuildPath, output, function(err) {
           if (err) return done(err);
           done();
         });
@@ -184,7 +187,7 @@ module.exports = function(directory, options, callback) {
         }
 
         //create the file inside the build directory
-        createFileInDirectoryAndWrite(buildStyle, output, function(err) {
+        createFileInDirectoryAndWrite(styleBuildPath, output, function(err) {
           if (err) return done(err);
           done();
         });
