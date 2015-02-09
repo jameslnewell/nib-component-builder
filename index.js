@@ -60,6 +60,10 @@ module.exports = function(directory, options, callback) {
   options.styles  = typeof options.styles === 'undefined' ? true : options.styles;
   options.files   = typeof options.files === 'undefined' ? true : options.files;
 
+
+  var require = typeof options.require === 'undefined' ? true : options.require;
+  var autorequire = typeof options.autorequire === 'undefined' ? true : options.autorequire;
+
   /**
    * The errors which occurred during build
    * @type  {Array}
@@ -91,7 +95,6 @@ module.exports = function(directory, options, callback) {
 
   var styleBuildFile      = options.styleBuildFile || 'build.css';
   var styleBuildPath      = buildDirectory+'/'+styleBuildFile;
-  
 
   // === set builder count ===
 
@@ -146,12 +149,12 @@ module.exports = function(directory, options, callback) {
         }
 
         //include the require functions
-        if (options.require !== false) {
+        if (require) {
           output = builder.scripts.require + output;
         }
 
         //require the canonical component
-        if (options.autorequire !== false) {
+        if (autorequire) {
           try {
             output += '\nrequire(\'' + builder.scripts.canonical(tree).canonical + '\')\n';
           } catch (err) {
@@ -234,7 +237,7 @@ module.exports = function(directory, options, callback) {
     };
 
     var builderOptions = {
-      development:  options.development === true,
+      development:  options.development === true
     };
 
     //validate the component
