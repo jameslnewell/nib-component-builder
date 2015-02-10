@@ -44,6 +44,7 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {boolean}   [options.install=true]        Whether the dependencies should be installed
  * @param   {boolean}   [options.require=true]        Whether the require method should be included in the outputted script (only one script on the page needs this)
  * @param   {boolean}   [options.autorequire=true]    Whether to automatically require the canonical component
+ * @param   {boolean}   [options.standalone=true]     Whether to automatically wrap everything in a anon fn to reduce conflicts
  * @param   {boolean}   [options.development=false]   Whether the development dependencies should be built
  * @param   {boolean}   [options.verbose=false]       Whether to print warnings and status messages to stdout
  * @param   {boolean}   [options.scripts=true]        Whether to build the scripts
@@ -161,6 +162,12 @@ module.exports = function(directory, options, callback) {
             return done(err);
           }
         }
+
+        //wrap in UMD
+        if (options.umd) {
+          output = builder.scripts.umd(builder.scripts.canonical(tree).canonical, options.umd, output);
+        }
+
         //create the file inside the build directory
         createFileInDirectoryAndWrite(scriptBuildPath, output, function(err) {
           if (err) return done(err);
@@ -237,6 +244,7 @@ module.exports = function(directory, options, callback) {
     };
 
     var builderOptions = {
+      umd:          options.standalone || '',
       development:  options.development === true
     };
 
