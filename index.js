@@ -5,6 +5,10 @@ var validator = require('component-validator');
 var resolver  = require('component-resolver');
 var builder   = require('component-builder');
 
+
+var proxy     = require('proxy-agent');
+var remotes   = require('component-remotes');
+
 /**
  * Create a directory if it doesn't already exist
  * @param   {string}    directory
@@ -54,13 +58,15 @@ function createFileInDirectoryAndWrite(file, contents, callback) {
  * @param   {string}    [options.buildDir]            The directory where the components are built to
  * @param   {string}    [options.scriptBuildFile]     The name of the script build file e.g. build.js
  * @param   {string}    [options.styleBuildFile]      The name of the style build file e.g. build.css
+ * @param   {number}    [options.timeout]             How long the installer waits for requests for remote components to finish
+ * @param   {number}    [options.retries]             How many times the installer should retry failed requests for remote components
+ * @param   {number}    [options.proxy]               Force all requests to go through a proxy server
  * @param   {function}  callback                      The callback
  */
 module.exports = function(directory, options, callback) {
   options.scripts = typeof options.scripts === 'undefined' ? true : options.scripts;
   options.styles  = typeof options.styles === 'undefined' ? true : options.styles;
   options.files   = typeof options.files === 'undefined' ? true : options.files;
-
 
   var require = typeof options.require === 'undefined' ? true : options.require;
   var autorequire = typeof options.autorequire === 'undefined' ? true : options.autorequire;
@@ -242,6 +248,19 @@ module.exports = function(directory, options, callback) {
       development:  options.development === true,
       verbose:      options.verbose === true
     };
+
+    if (options.proxy) {
+      resolveOptions.remote = remotes(remotes.defaults, {
+        out:          installDirectory,
+        local:        true,
+        timeout:      options.timeout,
+        retries:      options.retries,
+        agent:        proxy('http://localhost:3000')
+      });
+    } else {
+      resolveOptions.timeout = options.timeout;
+      resolveOptions.retries = options.retries;
+    }
 
     var builderOptions = {
       umd:          options.standalone || '',

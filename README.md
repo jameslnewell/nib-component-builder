@@ -28,6 +28,9 @@ One stop method for building JS, CSS and other assets with the Component builder
      * @param   {string}    [options.buildDir]            The directory where the components are built to
      * @param   {string}    [options.scriptBuildFile]     The name of the script build file e.g. build.js
      * @param   {string}    [options.styleBuildFile]      The name of the style build file e.g. build.css
+     * @param   {number}    [options.timeout]             How long the installer waits for requests for remote components to finish
+     * @param   {number}    [options.retries]             How many times the installer should retry failed requests for remote components
+     * @param   {number}    [options.proxy]               Force all requests to go through a proxy server
      * @param   {function}  callback                      The callback
      */
 

@@ -1,12 +1,14 @@
 {
   "name": "nib-component-builder",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "description": "One stop method for building JS, CSS and other assets with the Component builder.",
   "main": "index.js",
   "private": true,
   "dependencies": {
+    "component-builder": "~1.1.13",
+    "component-remotes": "~1.1.9",
+    "component-resolver": "^1.2.4",
     "component-validator": "~1.1.1",
-    "component-resolver": "~1.2.4",
-    "component-builder": "~1.1.13"
+    "proxy-agent": "~1.1.0"
   }
 }
