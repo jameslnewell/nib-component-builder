@@ -255,7 +255,7 @@ module.exports = function(directory, options, callback) {
         local:        true,
         timeout:      options.timeout,
         retries:      options.retries,
-        agent:        proxy('http://localhost:3000')
+        agent:        proxy(options.proxy)
       });
     } else {
       resolveOptions.timeout = options.timeout;
